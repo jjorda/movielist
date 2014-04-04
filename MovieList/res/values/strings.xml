@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MovieList</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_welcome">Bienvenido a MovieList</string>
+    <string name="menu_movie_name">Nombre de la peli</string>
+    <string name="button">Add</string>
+
+</resources>
