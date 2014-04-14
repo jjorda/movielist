@@ -6,5 +6,7 @@
     <string name="menu_welcome">Bienvenido a MovieList</string>
     <string name="menu_movie_name">Nombre de la peli</string>
     <string name="button">Add</string>
-
+    <string name="film_remove_dialog">Are you sure to remove that film?</string>
+    <string name="remove">Remove</string>
+    
 </resources>
