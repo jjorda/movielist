@@ -46,6 +46,7 @@ public class MovieListAdapter extends BaseAdapter {
 	}
 
 	public void add(String movieName) {
+		//0 because we want add ever in the first place
 		movieItems.add(0,movieName);
 		this.notifyDataSetChanged();
 	}
