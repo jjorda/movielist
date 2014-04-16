@@ -57,7 +57,6 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
-					// TODO *1 repeated code
 					movieListAdapter.add(newFilmText.getText().toString());
 					newFilmText.setText("");
 				}
@@ -70,7 +69,6 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				// TODO *1 repeated code
 				movieListAdapter.add(newFilmText.getText().toString());
 				newFilmText.setText("");
 			}
@@ -114,7 +112,6 @@ public class MainActivity extends Activity {
 			HttpEntity entity = response.getEntity();
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
