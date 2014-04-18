@@ -30,7 +30,7 @@ import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends Activity {
 
-	private static final String API_KEY = "feb57b96bfa4475b27b8fb6049de49ef";
+	private static final String MOVIEDB_API_KEY = "feb57b96bfa4475b27b8fb6049de49ef";
 	private MovieListAdapter movieListAdapter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,7 +106,7 @@ public class MainActivity extends Activity {
 		HttpClient httpClient = new DefaultHttpClient();
 		HttpContext localContext = new BasicHttpContext();
 
-		HttpGet httpGet = new HttpGet("https://api.themoviedb.org/3/search/movie?api_key=" + API_KEY + "&language=" + language + "&query=" + filmName);
+		HttpGet httpGet = new HttpGet("https://api.themoviedb.org/3/search/movie?api_key=" + MOVIEDB_API_KEY + "&language=" + language + "&query=" + filmName);
 		try {
 			HttpResponse response = httpClient.execute(httpGet, localContext);
 			HttpEntity entity = response.getEntity();
