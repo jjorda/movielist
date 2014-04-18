@@ -39,11 +39,6 @@ public class MainActivity extends Activity {
 
 		// Get references to UI widgets
 		ListView myListView = (ListView) findViewById(R.id.listView1);
-		// Create the Array List of to do items
-		//final List<String> MovieItems = new ArrayList<String>();
-		// Create the Array Adapter to bind the array to the List View
-		//final ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, MovieItems);
-		// Bind the Array Adapter to the List View
 		
 		movieListAdapter = new MovieListAdapter(new ArrayList<String>(), this);
 		myListView.setAdapter(movieListAdapter);
@@ -57,8 +52,10 @@ public class MainActivity extends Activity {
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
-					movieListAdapter.add(newFilmText.getText().toString());
-					newFilmText.setText("");
+					if (!"".equals(newFilmText.getText().toString())) {
+						movieListAdapter.add(newFilmText.getText().toString());
+						newFilmText.setText("");
+					}
 				}
 				return true;
 			}
@@ -69,8 +66,11 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				movieListAdapter.add(newFilmText.getText().toString());
-				newFilmText.setText("");
+				if (!"".equals(newFilmText.getText().toString())) {
+					movieListAdapter.add(newFilmText.getText().toString());
+					newFilmText.setText("");
+
+				}
 			}
 
 		});
