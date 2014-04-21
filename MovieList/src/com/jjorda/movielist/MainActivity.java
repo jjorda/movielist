@@ -11,6 +11,9 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import com.parse.Parse;
+import com.parse.PushService;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,21 +32,34 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 public class MainActivity extends Activity {
-
+	
+	private static final String APPLICATION_ID = "EVEg7obITwbN9d3b8ogq2EOM6ys51wxdZUEAWdPV";
+	private static final String CLIENT_KEY = "FkSA9jBCCkKrLpVj9mcLzkSYevT7kXWM2Uy5oPOe";
 	private static final String MOVIEDB_API_KEY = "feb57b96bfa4475b27b8fb6049de49ef";
+	
 	private MovieListAdapter movieListAdapter;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// Initialize the Parse SDK.
+		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
+
+		// Specify an Activity to handle all pushes by default.
+		PushService.setDefaultPushCallback(this, MainActivity.class);
+
+		// TODO: test push notifications need to swap this, this channel now 
+		// is generic but we need this channel is used only by 1 list
+		 PushService.subscribe(this, "MoviePush", MainActivity.class);
+
 		// Get references to UI widgets
 		ListView myListView = (ListView) findViewById(R.id.listView1);
-		
+
 		movieListAdapter = new MovieListAdapter(new ArrayList<String>(), this);
 		myListView.setAdapter(movieListAdapter);
-		
-		
+
 		// Edit text
 		final EditText newFilmText = (EditText) findViewById(R.id.editText1);
 		newFilmText.setImeActionLabel("Add", EditorInfo.IME_ACTION_SEND);

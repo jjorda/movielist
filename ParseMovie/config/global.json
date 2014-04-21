@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "MovieList": {
+            "applicationId": "EVEg7obITwbN9d3b8ogq2EOM6ys51wxdZUEAWdPV", 
+            "masterKey": "dFmy9J3eXnJGcprmH8vJKtfoybTHcbQ7upxvWevI"
+        }, 
+        "_default": {
+            "link": "MovieList"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.18"
+    }
+}
