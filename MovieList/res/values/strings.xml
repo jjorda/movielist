@@ -9,4 +9,7 @@
     <string name="film_remove_dialog">Are you sure to remove that film?</string>
     <string name="remove">Remove</string>
     
+    <string name="login">Login</string>
+    <string name="signin">Signin</string>
+    
 </resources>

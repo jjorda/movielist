@@ -5,6 +5,24 @@
     android:orientation="vertical"
     tools:context=".MainActivity" >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/login" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/signin" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,7 +35,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/menu_movie_name"
-            android:imeOptions="actionSend" 
+            android:imeOptions="actionSend"
             android:inputType="text" >
 
             <requestFocus />
@@ -28,14 +46,12 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/button" />
-
     </LinearLayout>
 
     <ListView
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
     </ListView>
 
 </LinearLayout>
