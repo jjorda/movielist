@@ -44,15 +44,6 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		// Initialize the Parse SDK.
-		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
-
-		// Specify an Activity to handle all pushes by default.
-		PushService.setDefaultPushCallback(this, MainActivity.class);
-
-		// TODO: test push notifications need to swap this, this channel now 
-		// is generic but we need this channel is used only by 1 list
-		 PushService.subscribe(this, "MoviePush", MainActivity.class);
 
 		// Get references to UI widgets
 		ListView myListView = (ListView) findViewById(R.id.listView1);
