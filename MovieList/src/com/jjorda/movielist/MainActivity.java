@@ -67,9 +67,9 @@ public class MainActivity extends Activity {
 				return true;
 			}
 		});
-		// Button
-		final Button myButton = (Button) findViewById(R.id.button1);
-		myButton.setOnClickListener(new OnClickListener() {
+		// Buttons
+		final Button addButton = (Button) findViewById(R.id.add_button);
+		addButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -81,7 +81,18 @@ public class MainActivity extends Activity {
 			}
 
 		});
+		// Sign Button
+		final Button signInButton = (Button) findViewById(R.id.sign_button);
+		signInButton.setOnClickListener(new OnClickListener() {
 
+			@Override
+			public void onClick(View arg0) {
+				
+			}
+
+		});
+
+		//End buttons
 		myListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
