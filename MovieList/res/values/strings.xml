@@ -8,8 +8,13 @@
     <string name="button">Add</string>
     <string name="film_remove_dialog">Are you sure to remove that film?</string>
     <string name="remove">Remove</string>
+    <string name="cancel">Cancel</string>
     
     <string name="login">Login</string>
     <string name="signin">Signin</string>
-    
+
+    <!-- login layout -->
+    <string name="username">username</string>
+    <string name="password">password</string>
+
 </resources>
