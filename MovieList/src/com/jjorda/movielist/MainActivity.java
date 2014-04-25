@@ -34,7 +34,10 @@ public class MainActivity extends FragmentActivity  {
 	private static final String MOVIEDB_API_KEY = "feb57b96bfa4475b27b8fb6049de49ef";
 
 	private MovieListAdapter movieListAdapter;
-
+	private EditText addMovieEditText;
+	private Button addButton;
+	private Button loginButton;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -47,48 +50,38 @@ public class MainActivity extends FragmentActivity  {
 		myListView.setAdapter(movieListAdapter);
 
 		// Edit text
-		final EditText newFilmText = (EditText) findViewById(R.id.editText1);
-		newFilmText.setImeActionLabel("Add", EditorInfo.IME_ACTION_SEND);
-		newFilmText.setOnEditorActionListener(new OnEditorActionListener() {
+		addMovieEditText = (EditText) findViewById(R.id.editText1);
+		addMovieEditText.setImeActionLabel("Add", EditorInfo.IME_ACTION_SEND);
+		addMovieEditText.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
 			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_SEND) {
-					if (!"".equals(newFilmText.getText().toString())) {
-						movieListAdapter.add(newFilmText.getText().toString());
-						newFilmText.setText("");
+					if (!"".equals(addMovieEditText.getText().toString())) {
+						movieListAdapter.add(addMovieEditText.getText().toString());
+						addMovieEditText.setText("");
 					}
 				}
 				return true;
 			}
 		});
 		// Buttons
-		final Button addButton = (Button) findViewById(R.id.add_button);
+		addButton = (Button) findViewById(R.id.add_button);
 		addButton.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
-				if (!"".equals(newFilmText.getText().toString())) {
-					movieListAdapter.add(newFilmText.getText().toString());
-					newFilmText.setText("");
+				if (!"".equals(addMovieEditText.getText().toString())) {
+					movieListAdapter.add(addMovieEditText.getText().toString());
+					addMovieEditText.setText("");
 
 				}
 			}
 
 		});
-		// Sign Button
-		final Button signInButton = (Button) findViewById(R.id.sign_button);
-		signInButton.setOnClickListener(new OnClickListener() {
 
-			@Override
-			public void onClick(View arg0) {
-
-			}
-
-		});
-
-		// Sign Button
-		final Button loginButton = (Button) findViewById(R.id.login_button);
+		// login Button
+		loginButton = (Button) findViewById(R.id.login_button);
 		loginButton.setOnClickListener(new OnClickListener() {
 
 			@Override
