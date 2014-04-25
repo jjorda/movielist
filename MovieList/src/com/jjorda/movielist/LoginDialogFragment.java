@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -35,16 +36,16 @@ public class LoginDialogFragment extends DialogFragment {
 		loginTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				loginTextView.setTextColor(Color.BLACK);
-				signinTextView.setTextColor(Color.BLUE);
+				loginTextView.setTextColor(Color.BLUE);
+				signinTextView.setTextColor(Color.BLACK);
 			}
 		});
 
-		loginTextView.setOnClickListener(new OnClickListener() {
+		signinTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				loginTextView.setTextColor(Color.BLUE);
-				signinTextView.setTextColor(Color.BLACK);
+				loginTextView.setTextColor(Color.BLACK);
+				signinTextView.setTextColor(Color.BLUE);
 			}
 		});
 
@@ -54,20 +55,26 @@ public class LoginDialogFragment extends DialogFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				// check
-				if (loginTextView.getTextColors().equals(Color.BLUE)) {
+//				if (loginTextView.getTextColors().equals(Color.BLUE)) {
 					ParseUser.logInInBackground(userEditText.getText().toString(), passEditText.getText().toString(), new LogInCallback() {
 						public void done(ParseUser user, ParseException e) {
 							if (user != null) {
-								// Hooray! The user is logged in.
+								getActivity().runOnUiThread(new Runnable() {
+							        @Override
+							        public void run() {
+										Toast.makeText(getActivity(), "mierda", Toast.LENGTH_LONG).show();
+							        }
+							    });
+								
 								Log.d("DEBUG", "logged in: " + user.toString());
 							} else {
 								Log.d("DEBUG", "fail logging");
 							}
 						}
 					});
-				} else {
-					Log.d("DEBUG", "signing");
-				}
+//				} else {
+//					Log.d("DEBUG", "signing");
+//				}
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {

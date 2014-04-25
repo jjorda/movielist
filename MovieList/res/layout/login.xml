@@ -17,7 +17,8 @@
             android:clickable="true"
             android:gravity="center"
             android:text="@string/login"
-            android:textSize="24sp" />
+            android:textSize="24sp" 
+            android:enabled="true"/>
 
         <TextView
             android:id="@+id/signinTextView"
@@ -27,7 +28,8 @@
             android:clickable="true"
             android:gravity="center"
             android:text="@string/signin"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:enabled="true" />
 
     </LinearLayout>
 

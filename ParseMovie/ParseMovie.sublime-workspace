@@ -14,6 +14,14 @@
 				"buffer_size": 497,
 				"line_ending": "Windows"
 			}
+		},
+		{
+			"file": "/C/Users/jjorda/Desktop/asd.html",
+			"settings":
+			{
+				"buffer_size": 649,
+				"line_ending": "Windows"
+			}
 		}
 	],
 	"build_system": "",
@@ -94,7 +102,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -119,6 +127,33 @@
 							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/C/Users/jjorda/Desktop/asd.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 649,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								649,
+								649
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
