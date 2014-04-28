@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -28,20 +29,25 @@ public class MovieListAdapter extends BaseAdapter {
 		if (currentUser != null) {
 
 			try {
-				ParseQuery<ParseObject> listQuery = ParseQuery.getQuery("MovieList").whereEqualTo("user", currentUser);
+				ParseQuery<ParseObject> listQuery = ParseQuery.getQuery("MovieList").whereEqualTo("users", currentUser);
 				List<ParseObject> movieLists = listQuery.find();
 				if (movieLists.size() == 0) {
 					ParseObject movieList = new ParseObject("MovieList");
 					movieList.put("listname", "list1");
-					
-					//TODO check that
-					List<ParseObject> users= new ArrayList<ParseObject>();
+
+					// TODO check that
+					List<ParseObject> users = new ArrayList<ParseObject>();
 					users.add(currentUser);
-					
-					movieList.put("user", users);
+
+					movieList.put("users", users);
 					movieList.save();
 					currentList = movieList;
+
+					// TODO check
+					installList(movieList, currentUser);
+
 				} else {
+
 					currentList = movieLists.get(0);
 					ParseQuery<ParseObject> movieQuery = ParseQuery.getQuery("Movie").whereEqualTo("movielist", currentList);
 					movies = movieQuery.find();
@@ -88,17 +94,12 @@ public class MovieListAdapter extends BaseAdapter {
 
 	public void add(String movieName) {
 		// parse block
-		
-		
+
 		ParseObject movie = new ParseObject("Movie");
 		movie.put("name", movieName);
-		
-		//TODO check that 
-		List<ParseObject> movieLists= new ArrayList<ParseObject>();
-		movieLists.add(currentList);
-		
-		movie.put("movielist", movieLists);
-		try {			
+
+		movie.put("movielist", currentList);
+		try {
 			movie.save();
 		} catch (ParseException e) {
 			// TODO something
@@ -125,6 +126,16 @@ public class MovieListAdapter extends BaseAdapter {
 		// list block
 		movieItems.remove(position);
 		this.notifyDataSetChanged();
+	}
+
+	// TODO check
+	private void installList(ParseObject movieList, ParseUser user) throws ParseException {
+		ParseInstallation pInstal = ParseInstallation.getCurrentInstallation();
+		List<ParseObject> movielists = (List<ParseObject>) pInstal.get("movielists");
+		movielists.add(movieList);
+		pInstal.put("movielists", movielists);
+		pInstal.put("user", user);
+		pInstal.save();
 	}
 
 }

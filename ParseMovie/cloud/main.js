@@ -6,10 +6,14 @@ Parse.Cloud.define("hello", function(request, response) {
 });
 
 Parse.Cloud.afterSave("Movie", function(request) {
+var query = new Parse.Query(Parse.Installation);
+query.equalTo('movielists', request.object.get("movielist"));
+query.notEqualTo('user', request.user);
  Parse.Push.send({
-  channels: [ "MoviePush" ],
+
+  where: query,
   data: {
-    alert: "Usuario 1 ha añadido la pelicula " + request.object.get("name")
+    alert: "Usuario " + request.user.get("username") + " ha añadido la pelicula " + request.object.get("name")
   }
 }, {
   success: function() {
