@@ -20,7 +20,7 @@ public final class MovieListApplication extends Application {
 
 		// TODO: test push notifications need to swap this, this channel now
 		// is generic but we need this channel is used only by 1 list
-		PushService.subscribe(this, "MoviePush", MainActivity.class);
+		//PushService.subscribe(this, "MoviePush", MainActivity.class);
 
 	}
 

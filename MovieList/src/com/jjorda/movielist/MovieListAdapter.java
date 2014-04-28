@@ -1,5 +1,6 @@
 package com.jjorda.movielist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -12,28 +13,49 @@ import android.widget.TextView;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class MovieListAdapter extends BaseAdapter {
 
-
-	private List<String> movieItems;
+	private List<ParseObject> movieItems;
 	private LayoutInflater mInflater;
+	private ParseObject currentList;
 
-	public MovieListAdapter(List<String> movieItems, Context context) {
+	public MovieListAdapter(List<ParseObject> movies, Context context) {
 		super();
+		// start new code
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser != null) {
 
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
-		try {
-			List<ParseObject> movies = query.find();
-			for (ParseObject movie : movies) {
-				movieItems.add(movie.getString("name"));
+			try {
+				ParseQuery<ParseObject> listQuery = ParseQuery.getQuery("MovieList").whereEqualTo("user", currentUser);
+				List<ParseObject> movieLists = listQuery.find();
+				if (movieLists.size() == 0) {
+					ParseObject movieList = new ParseObject("MovieList");
+					movieList.put("listname", "list1");
+					
+					//TODO check that
+					List<ParseObject> users= new ArrayList<ParseObject>();
+					users.add(currentUser);
+					
+					movieList.put("user", users);
+					movieList.save();
+					currentList = movieList;
+				} else {
+					currentList = movieLists.get(0);
+					ParseQuery<ParseObject> movieQuery = ParseQuery.getQuery("Movie").whereEqualTo("movielist", currentList);
+					movies = movieQuery.find();
+				}
+
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
-		this.movieItems = movieItems;
+		} else {
+			// TODO ¿que pasa si no estás logado?
+		}
+		this.movieItems = movies;
 		mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 	}
@@ -59,15 +81,24 @@ public class MovieListAdapter extends BaseAdapter {
 			convertView = mInflater.inflate(R.layout.movie_list_item, null);
 
 		TextView textView = (TextView) convertView.findViewById(R.id.itemTextView);
-		textView.setText((String) getItem(position));
+		ParseObject movie = (ParseObject) getItem(position);
+		textView.setText(movie.getString("name"));
 		return convertView;
 	}
 
 	public void add(String movieName) {
 		// parse block
+		
+		
 		ParseObject movie = new ParseObject("Movie");
 		movie.put("name", movieName);
-		try {
+		
+		//TODO check that 
+		List<ParseObject> movieLists= new ArrayList<ParseObject>();
+		movieLists.add(currentList);
+		
+		movie.put("movielist", movieLists);
+		try {			
 			movie.save();
 		} catch (ParseException e) {
 			// TODO something
@@ -75,19 +106,16 @@ public class MovieListAdapter extends BaseAdapter {
 		}
 
 		// list block
-		movieItems.add(0, movieName);
+		movieItems.add(0, movie);
 		this.notifyDataSetChanged();
 
 	}
 
 	public void remove(int position) {
 		// parse block
-		String movieName = movieItems.get(position);
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Movie");
-		query.whereEqualTo("name", movieName);
+		ParseObject movie = movieItems.get(position);
 		try {
 			// TODO Bad reference, we can use name for references the object.
-			ParseObject movie = query.getFirst();
 			movie.delete();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block

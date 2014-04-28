@@ -12,11 +12,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SignUpCallback;
 
 public class LoginDialogFragment extends DialogFragment {
 	@Override
@@ -59,21 +59,25 @@ public class LoginDialogFragment extends DialogFragment {
 					ParseUser.logInInBackground(userEditText.getText().toString(), passEditText.getText().toString(), new LogInCallback() {
 						public void done(ParseUser user, ParseException e) {
 							if (user != null) {
-								getActivity().runOnUiThread(new Runnable() {
-							        @Override
-							        public void run() {
-										Toast.makeText(getActivity(), "mierda", Toast.LENGTH_LONG).show();
-							        }
-							    });
-								
 								Log.d("DEBUG", "logged in: " + user.toString());
 							} else {
-								Log.d("DEBUG", "fail logging");
+								Log.d("ERROR", "fail logging");
 							}
 						}
 					});
 //				} else {
-//					Log.d("DEBUG", "signing");
+//					ParseUser user = new ParseUser();
+//					user.setUsername(userEditText.getText().toString());
+//					user.setPassword(passEditText.getText().toString());
+//					user.signUpInBackground(new SignUpCallback() {
+//						public void done(ParseException e) {
+//							if (e == null) {
+//								Log.d("DEBUG", "Signed in");
+//							} else {
+//								Log.d("ERROR", "fail Signin");
+//							}
+//						}
+//					});
 //				}
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

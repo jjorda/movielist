@@ -11,6 +11,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
+import com.parse.ParseObject;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -34,9 +36,11 @@ public class MainActivity extends FragmentActivity  {
 	private static final String MOVIEDB_API_KEY = "feb57b96bfa4475b27b8fb6049de49ef";
 
 	private MovieListAdapter movieListAdapter;
+	
 	private EditText addMovieEditText;
 	private Button addButton;
 	private Button loginButton;
+	private ListView myListView;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +48,9 @@ public class MainActivity extends FragmentActivity  {
 		setContentView(R.layout.activity_main);
 
 		// Get references to UI widgets
-		ListView myListView = (ListView) findViewById(R.id.listView1);
+		myListView = (ListView) findViewById(R.id.listView1);
 
-		movieListAdapter = new MovieListAdapter(new ArrayList<String>(), this);
+		movieListAdapter = new MovieListAdapter(new ArrayList<ParseObject>(), this);
 		myListView.setAdapter(movieListAdapter);
 
 		// Edit text
