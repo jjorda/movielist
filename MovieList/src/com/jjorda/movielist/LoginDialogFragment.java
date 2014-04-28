@@ -19,6 +19,8 @@ import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
 public class LoginDialogFragment extends DialogFragment {
+	private boolean isLogin;
+
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 		// Use the Builder class for convenient dialog construction
@@ -31,11 +33,15 @@ public class LoginDialogFragment extends DialogFragment {
 		final TextView loginTextView = (TextView) view.findViewById(R.id.loginTextView);
 		final TextView signinTextView = (TextView) view.findViewById(R.id.signinTextView);
 
+		// intialize to true
+		isLogin = true;
+
 		loginTextView.setTextColor(Color.BLUE);
 
 		loginTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				isLogin = true;
 				loginTextView.setTextColor(Color.BLUE);
 				signinTextView.setTextColor(Color.BLACK);
 			}
@@ -44,6 +50,7 @@ public class LoginDialogFragment extends DialogFragment {
 		signinTextView.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				isLogin = false;
 				loginTextView.setTextColor(Color.BLACK);
 				signinTextView.setTextColor(Color.BLUE);
 			}
@@ -55,7 +62,7 @@ public class LoginDialogFragment extends DialogFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int id) {
 				// check
-//				if (loginTextView.getTextColors().equals(Color.BLUE)) {
+				if (isLogin) {
 					ParseUser.logInInBackground(userEditText.getText().toString(), passEditText.getText().toString(), new LogInCallback() {
 						public void done(ParseUser user, ParseException e) {
 							if (user != null) {
@@ -65,20 +72,20 @@ public class LoginDialogFragment extends DialogFragment {
 							}
 						}
 					});
-//				} else {
-//					ParseUser user = new ParseUser();
-//					user.setUsername(userEditText.getText().toString());
-//					user.setPassword(passEditText.getText().toString());
-//					user.signUpInBackground(new SignUpCallback() {
-//						public void done(ParseException e) {
-//							if (e == null) {
-//								Log.d("DEBUG", "Signed in");
-//							} else {
-//								Log.d("ERROR", "fail Signin");
-//							}
-//						}
-//					});
-//				}
+				} else {
+					ParseUser user = new ParseUser();
+					user.setUsername(userEditText.getText().toString());
+					user.setPassword(passEditText.getText().toString());
+					user.signUpInBackground(new SignUpCallback() {
+						public void done(ParseException e) {
+							if (e == null) {
+								Log.d("DEBUG", "Signed in");
+							} else {
+								Log.d("ERROR", "fail Signin");
+							}
+						}
+					});
+				}
 			}
 		}).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int id) {
