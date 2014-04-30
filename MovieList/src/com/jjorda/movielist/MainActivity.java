@@ -50,7 +50,7 @@ public class MainActivity extends FragmentActivity {
 		setContentView(R.layout.activity_main);
 
 		// login text view
-		loginTextView = (TextView) findViewById(R.id.loginTextView);
+		loginTextView = (TextView) findViewById(R.id.login_textview);
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if (currentUser != null){
 			loginTextView.setText(currentUser.getUsername());
