@@ -11,7 +11,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 
-import com.parse.ParseObject;
+import com.jjorda.movielist.model.Movie;
+import com.parse.ParseUser;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -31,26 +32,34 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-public class MainActivity extends FragmentActivity  {
+public class MainActivity extends FragmentActivity {
 
 	private static final String MOVIEDB_API_KEY = "feb57b96bfa4475b27b8fb6049de49ef";
 
 	private MovieListAdapter movieListAdapter;
-	
+
 	private EditText addMovieEditText;
 	private Button addButton;
 	private Button loginButton;
 	private ListView myListView;
-	
+	private TextView loginTextView;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		// login text view
+		loginTextView = (TextView) findViewById(R.id.loginTextView);
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser != null){
+			loginTextView.setText(currentUser.getUsername());
+		}
+
 		// Get references to UI widgets
 		myListView = (ListView) findViewById(R.id.listView1);
 
-		movieListAdapter = new MovieListAdapter(new ArrayList<ParseObject>(), this);
+		movieListAdapter = new MovieListAdapter(new ArrayList<Movie>(), this);
 		myListView.setAdapter(movieListAdapter);
 
 		// Edit text
@@ -90,7 +99,8 @@ public class MainActivity extends FragmentActivity  {
 
 			@Override
 			public void onClick(View arg0) {
-//		        new LoginDialogFragment().show(getFragmentManager(), "MyProgressDialog");
+				// new LoginDialogFragment().show(getFragmentManager(),
+				// "MyProgressDialog");
 				DialogFragment df = new LoginDialogFragment();
 				df.show(getSupportFragmentManager(), "LoginDialogFragment");
 

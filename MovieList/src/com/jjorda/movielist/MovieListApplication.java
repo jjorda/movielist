@@ -1,9 +1,12 @@
 package com.jjorda.movielist;
 
-import com.parse.Parse;
-import com.parse.PushService;
-
 import android.app.Application;
+
+import com.jjorda.movielist.model.Movie;
+import com.jjorda.movielist.model.MovieList;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.PushService;
 
 public final class MovieListApplication extends Application {
 	private static final String APPLICATION_ID = "EVEg7obITwbN9d3b8ogq2EOM6ys51wxdZUEAWdPV";
@@ -12,6 +15,10 @@ public final class MovieListApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		//Parse Mapping
+		ParseObject.registerSubclass(Movie.class);
+		ParseObject.registerSubclass(MovieList.class);
+
 		// Initialize the Parse SDK.
 		Parse.initialize(this, APPLICATION_ID, CLIENT_KEY);
 

@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.jjorda.movielist.model.Movie;
+import com.jjorda.movielist.model.MovieList;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
@@ -18,44 +20,33 @@ import com.parse.ParseUser;
 
 public class MovieListAdapter extends BaseAdapter {
 
-	private List<ParseObject> movieItems;
+	private List<Movie> movieItems;
 	private LayoutInflater mInflater;
-	private ParseObject currentList;
+	private MovieList currentList;
 
-	public MovieListAdapter(List<ParseObject> movies, Context context) {
+	public MovieListAdapter(List<Movie> movies, Context context) {
 		super();
 		// start new code
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if (currentUser != null) {
 
-			try {
-				ParseQuery<ParseObject> listQuery = ParseQuery.getQuery("MovieList").whereEqualTo("users", currentUser);
-				List<ParseObject> movieLists = listQuery.find();
-				if (movieLists.size() == 0) {
-					ParseObject movieList = new ParseObject("MovieList");
-					movieList.put("listname", "list1");
+			List<MovieList> movieLists = MovieList.findMovieListsByUser(currentUser);
 
-					// TODO check that
-					List<ParseObject> users = new ArrayList<ParseObject>();
-					users.add(currentUser);
+			if (movieLists.size() == 0) {
+				MovieList movieList = new MovieList();
+				movieList.setListName("list1");
 
-					movieList.put("users", users);
-					movieList.save();
-					currentList = movieList;
+				movieList.addUser(currentUser);
+				movieList.ssave();
+				currentList = movieList;
 
-					// TODO check
-					installList(movieList, currentUser);
+				// TODO check
+				installList(movieList, currentUser);
 
-				} else {
+			} else {
 
-					currentList = movieLists.get(0);
-					ParseQuery<ParseObject> movieQuery = ParseQuery.getQuery("Movie").whereEqualTo("movielist", currentList);
-					movies = movieQuery.find();
-				}
-
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				currentList = movieLists.get(0);
+				movies = Movie.getMoviesByList(currentList);
 			}
 
 		} else {
@@ -95,16 +86,10 @@ public class MovieListAdapter extends BaseAdapter {
 	public void add(String movieName) {
 		// parse block
 
-		ParseObject movie = new ParseObject("Movie");
-		movie.put("name", movieName);
-
-		movie.put("movielist", currentList);
-		try {
-			movie.save();
-		} catch (ParseException e) {
-			// TODO something
-			e.printStackTrace();
-		}
+		Movie movie = new Movie();
+		movie.setName(movieName);
+		movie.setMovieList(currentList);
+		movie.ssave();
 
 		// list block
 		movieItems.add(0, movie);
@@ -129,13 +114,19 @@ public class MovieListAdapter extends BaseAdapter {
 	}
 
 	// TODO check
-	private void installList(ParseObject movieList, ParseUser user) throws ParseException {
+	private void installList(MovieList movieList, ParseUser user) {
+
 		ParseInstallation pInstal = ParseInstallation.getCurrentInstallation();
-		List<ParseObject> movielists = (List<ParseObject>) pInstal.get("movielists");
+		List<MovieList> movielists = (List<MovieList>) pInstal.get("movielists");
 		movielists.add(movieList);
 		pInstal.put("movielists", movielists);
 		pInstal.put("user", user);
-		pInstal.save();
+		try {
+			pInstal.save();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }
